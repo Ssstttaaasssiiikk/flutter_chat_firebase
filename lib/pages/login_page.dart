@@ -1,6 +1,7 @@
 import 'package:chat_flutter_firebase/services/auth/auth_service.dart';
 import 'package:chat_flutter_firebase/components/app_button.dart';
 import 'package:chat_flutter_firebase/components/app_textfield.dart';
+import 'package:chat_flutter_firebase/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -11,7 +12,6 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({super.key, required this.onTap});
 
-  //login method
   void login(BuildContext context) async {
     final authService = AuthService();
 
@@ -31,62 +31,67 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //logo
-            Icon(
-              Icons.message,
-              size: 60,
-              color: Theme.of(context).colorScheme.primary,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 25,
             ),
-            const SizedBox(height: 50),
-            Text(
-              'С возвращением!',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 30),
-            AppTextfield(
-              hintText: 'email',
-              controller: _email,
-            ),
-            const SizedBox(height: 10),
-            AppTextfield(
-              hintText: 'пароль',
-              controller: _password,
-            ),
-            const SizedBox(height: 25),
-            AppButton(
-              text: 'LOGIN',
-              onTap: () => login(context),
-            ),
-            const SizedBox(height: 25),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Column(
               children: [
                 Text(
-                  'Нет аккаунта?',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  'Войти',
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
-                TextButton(
-                  onPressed: onTap,
-                  child: Text(
-                    'Создать',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                )
+                const SizedBox(height: 30),
+                Wrap(
+                  runSpacing: 15,
+                  direction: Axis.horizontal,
+                  children: [
+                    AuthTextField(
+                      controller: _email,
+                      label: 'Email',
+                      isPassword: false,
+                      error: false,
+                    ),
+                    AuthTextField(
+                      controller: _password,
+                      label: 'Пароль',
+                      isPassword: true,
+                      error: false,
+                    )
+                  ],
+                ),
+                const SizedBox(height: 30),
+                CustomButton(
+                  loading: false,
+                  text: 'Войти',
+                  onPressed: () => login(context),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'У вас нет аккаунта?',
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    TextButton(
+                      onPressed: onTap,
+                      child: Text(
+                        'Создать',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: AppColors.blue),
+                      ),
+                    )
+                  ],
+                ),
               ],
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );

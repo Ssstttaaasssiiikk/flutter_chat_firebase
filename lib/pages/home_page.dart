@@ -15,7 +15,11 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(
+          'Чаты',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
       ),
       drawer: const AppDrawer(),
       body: _buildUserList(),
@@ -27,13 +31,13 @@ class HomePage extends StatelessWidget {
       stream: _chatService.getUsersStream(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return const Text('Ошибка');
+          return const Center(child: Text('Ошибка'));
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Загрузка');
+          return const Center(child: Text('Загрузка'));
         }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Text('Нет пользователей');
+          return const Center(child: Text('Нет пользователей'));
         }
         return ListView(
           children: snapshot.data!
@@ -47,7 +51,7 @@ class HomePage extends StatelessWidget {
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
     final email =
-        userData['email'] as String? ?? 'Unknown'; // Handle null email
+        userData['email'] as String? ?? 'Unknown';
     final currentUserEmail = _authService.getCurrentUser();
 
     // ignore: unrelated_type_equality_checks

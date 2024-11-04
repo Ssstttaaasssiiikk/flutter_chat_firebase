@@ -16,26 +16,11 @@ class AppDrawer extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       child: Column(
         children: [
-          DrawerHeader(
-            child: Center(
-              child: Icon(
-                Icons.message,
-                color: Theme.of(context).colorScheme.primary,
-                size: 40,
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(left: 25),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ListTile(
-                  title: const Text('HOME'),
-                  leading: const Icon(Icons.home_filled),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
                 ListTile(
                   title: const Text('SETTINGS'),
                   leading: const Icon(Icons.settings),

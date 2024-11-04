@@ -1,14 +1,25 @@
 import 'package:chat_flutter_firebase/services/auth/auth_gate.dart';
 import 'package:chat_flutter_firebase/firebase_options.dart';
+import 'package:chat_flutter_firebase/theme/colors.dart';
 import 'package:chat_flutter_firebase/theme/theme_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  // runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: AppColors.white,
+    systemNavigationBarIconBrightness: Brightness.dark,
+    statusBarColor: AppColors.white,
+    statusBarIconBrightness: Brightness.dark,
+  ));
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
