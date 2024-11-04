@@ -46,7 +46,8 @@ class HomePage extends StatelessWidget {
 
   Widget _buildUserListItem(
       Map<String, dynamic> userData, BuildContext context) {
-    final email = userData['email'] as String? ?? 'Unknown';  // Handle null email
+    final email =
+        userData['email'] as String? ?? 'Unknown'; // Handle null email
     final currentUserEmail = _authService.getCurrentUser();
 
     // ignore: unrelated_type_equality_checks
@@ -58,14 +59,15 @@ class HomePage extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ChatPage(
-                receiverEmail: email,
+                receiverEmail: userData['email'],
+                receiverID: userData['uid'],
               ),
             ),
           );
         },
       );
     } else {
-      return Container();  // Empty container for current user
+      return Container();
     }
   }
 }
