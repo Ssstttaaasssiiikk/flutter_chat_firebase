@@ -1,27 +1,26 @@
+import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:flutter/material.dart';
 
-class ChatBubble extends StatelessWidget {
+class AppChatBubble extends StatelessWidget {
   final String message;
+  final bool tail;
   final bool isCurrentUser;
 
-  const ChatBubble({
+  const AppChatBubble({
     super.key,
+    required this.tail,
     required this.message,
     required this.isCurrentUser,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: isCurrentUser ? Colors.green : Colors.blue,
-          borderRadius: BorderRadius.circular(12)),
-      padding: const EdgeInsets.all(16),
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-      child: Text(
-        message,
-        style: const TextStyle(color: Colors.white),
-      ),
+    return BubbleSpecialThree(
+      text: message,
+      tail: true,
+      isSender: isCurrentUser,
+      color: isCurrentUser ? Colors.black : Colors.blue,
+      textStyle: const TextStyle(color: Colors.white),
     );
   }
 }
