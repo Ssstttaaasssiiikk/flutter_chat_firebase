@@ -17,7 +17,7 @@ class AppChatBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return BubbleSpecialThree(
       text: message,
-      tail: true,
+      tail: tail,
       isSender: isCurrentUser,
       color: isCurrentUser ? Colors.black : Colors.blue,
       textStyle: const TextStyle(color: Colors.white),

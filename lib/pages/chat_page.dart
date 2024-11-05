@@ -94,16 +94,23 @@ class _ChatPageState extends State<ChatPage> {
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(child: Text('Нет сообщений'));
         }
-        return ListView(
+
+        final docs = snapshot.data!.docs;
+        return ListView.builder(
           controller: _scrollController,
-          children:
-              snapshot.data!.docs.map((doc) => _buildMessageItem(doc)).toList(),
+          itemCount: docs.length,
+          itemBuilder: (context, index) {
+            final doc = docs[index];
+            final isLastFromSender = index == docs.length - 1 ||
+                docs[index + 1].get('senderID') != doc.get('senderID');
+            return _buildMessageItem(doc, isLastFromSender);
+          },
         );
       },
     );
   }
 
-  Widget _buildMessageItem(DocumentSnapshot doc) {
+  Widget _buildMessageItem(DocumentSnapshot doc, bool isLastFromSender) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     bool isCurrentUser = data['senderID'] == _authService.getCurrentUser()!.uid;
     var alignment =
@@ -115,7 +122,7 @@ class _ChatPageState extends State<ChatPage> {
         Container(
           alignment: alignment,
           child: AppChatBubble(
-            tail: true,
+            tail: isLastFromSender,
             message: data['message'],
             isCurrentUser: isCurrentUser,
           ),
